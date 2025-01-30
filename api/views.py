@@ -1,9 +1,10 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializer import UserSerializer
+from .models import User
 
 @api_view(['GET'])
-def get_user(request):
-    return Response(UserSerializer({
-        "email": "cliffike47@gmail.com"
-        }).data)
+def get_users(request):
+    users = User.objects.all()
+    results = UserSerializer(users, many=True)
+    return Response(results.data)
